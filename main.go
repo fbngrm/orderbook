@@ -45,6 +45,11 @@ func main() {
 				log.Println(err)
 				continue
 			}
+			// delete zero orders
+			if quantity.String() == "0" {
+				book.CancelOrder(id)
+				continue
+			}
 			side, err := orderbook.NewSide(update.Side)
 			if err != nil {
 				log.Println(err)
@@ -61,6 +66,7 @@ func main() {
 				continue
 			}
 			fmt.Println(string(b))
+
 		}
 	}()
 
