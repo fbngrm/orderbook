@@ -6,7 +6,6 @@ import (
 	"github.com/shopspring/decimal"
 )
 
-// Order strores information about request
 type Order struct {
 	id       string
 	side     Side
@@ -14,7 +13,6 @@ type Order struct {
 	price    decimal.Decimal
 }
 
-// NewOrder creates new constant object Order
 func NewOrder(orderID string, side Side, quantity, price decimal.Decimal) *Order {
 	return &Order{
 		id:       orderID,

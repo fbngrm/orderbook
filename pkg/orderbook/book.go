@@ -87,21 +87,20 @@ func (ob *OrderBook) CancelOrder(orderID string) *Order {
 }
 
 func (ob *OrderBook) GetSpread() *Spread {
-
 	lowestAskPrice := "0"
 	lowestAskQuantity := "0"
 	minAsk := ob.asks.MinPriceOrder()
 	if minAsk != nil {
-		lowestAskPrice = minAsk.Price().String()
-		lowestAskQuantity = minAsk.Quantity().String()
+		lowestAskPrice = minAsk.Price().StringFixed(1)
+		lowestAskQuantity = minAsk.Quantity().StringFixed(1)
 	}
 
 	highestBidPrice := "0"
 	highestBidQuantity := "0"
 	maxBid := ob.bids.MaxPriceOrder()
 	if maxBid != nil {
-		highestBidPrice = maxBid.Price().String()
-		highestBidQuantity = maxBid.Quantity().String()
+		highestBidPrice = maxBid.Price().StringFixed(1)
+		highestBidQuantity = maxBid.Quantity().StringFixed(1)
 	}
 
 	return &Spread{

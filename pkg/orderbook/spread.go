@@ -1,7 +1,6 @@
 package orderbook
 
 import (
-	"encoding/json"
 	"fmt"
 )
 
@@ -31,13 +30,11 @@ func (s *Spread) MarshalJSON() ([]byte, error) {
 		Amount: s.lowestAskAmount,
 	}
 
-	bid, err := json.Marshal(b)
-	if err != nil {
-		return nil, err
-	}
-	ask, err := json.Marshal(a)
-	if err != nil {
-		return nil, err
-	}
-	return []byte(fmt.Sprintf("{%s,%s}", bid, ask)), nil
+	return []byte(fmt.Sprintf(
+		`{{"%s", "%s"}, {"%s", "%s"}}`,
+		b.Price,
+		b.Amount,
+		a.Price,
+		a.Amount,
+	)), nil
 }

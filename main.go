@@ -31,10 +31,12 @@ func main() {
 	book := orderbook.NewOrderBook()
 
 	parser := parse.NewJSONStreamParser(input)
+
+	// todo: factor out of main
 	updateCh, errCh := parser.Run(ctx)
 	go func() {
 		for update := range updateCh {
-			id := update.Side + update.Price // todo: use a unique hash here for ID
+			id := update.Side + update.Price // todo: use a unique hash here for the ID
 			price, err := decimal.NewFromString(update.Price)
 			if err != nil {
 				log.Println(err)
@@ -66,7 +68,6 @@ func main() {
 				continue
 			}
 			fmt.Println(string(b))
-
 		}
 	}()
 
@@ -78,85 +79,4 @@ func main() {
 
 	<-ctx.Done()
 	parser.Close()
-
-	// id := "100.0"
-	// price, err := decimal.NewFromString(id)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// quantity, err := decimal.NewFromString("1.0")
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// book.UpdateOrder("ask_"+id, orderbook.SELL, quantity, price)
-
-	// id = "100.1"
-	// price, err = decimal.NewFromString(id)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// quantity, err = decimal.NewFromString("0.1")
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// book.UpdateOrder("ask_"+id, orderbook.SELL, quantity, price)
-
-	// id = "101.0"
-	// price, err = decimal.NewFromString(id)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// quantity, err = decimal.NewFromString("4.0")
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// book.UpdateOrder("ask_"+id, orderbook.SELL, quantity, price)
-
-	// id = "99.6"
-	// price, err = decimal.NewFromString(id)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// quantity, err = decimal.NewFromString("5.1")
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// book.UpdateOrder("ask_"+id, orderbook.BUY, quantity, price)
-
-	// id = "98.7"
-	// price, err = decimal.NewFromString(id)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// quantity, err = decimal.NewFromString("3.4")
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// book.UpdateOrder("ask_"+id, orderbook.BUY, quantity, price)
-
-	// // 	spew.Dump(book)
-
-	// book.CancelOrder("ask_100.0")
-
-	// id = "98.7"
-	// price, err = decimal.NewFromString(id)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// quantity, err = decimal.NewFromString("1.4")
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// book.UpdateOrder("ask_"+id, orderbook.BUY, quantity, price)
-
-	// // spew.Dump(book)
-	// fmt.Println(book.String())
-	// fmt.Println(book.GetSpread())
-
-	// b, err := book.GetSpread().MarshalJSON()
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// fmt.Println(string(b))
-
 }
