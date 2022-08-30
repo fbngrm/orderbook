@@ -25,7 +25,7 @@ func TestGetSpread(t *testing.T) {
 
 	tests := []testcase{
 		{
-			name: "",
+			name: "get list of spreads",
 			inputs: []input{
 				{
 					orderID:  "01",
